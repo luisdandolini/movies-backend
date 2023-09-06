@@ -14,12 +14,25 @@ class MoviesController {
       })
   
       return response.status(200).json();
-      
+
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }
   }
 
+  async show(request, response) {
+    const { user_id } = request.params;
+
+    try {
+      const movies = await knex("movies").where({ user_id });
+
+      return response.json({ ...movies });
+
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+      
+    }  
+  }
 }
 
 module.exports = MoviesController;
