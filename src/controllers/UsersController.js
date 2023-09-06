@@ -1,4 +1,5 @@
 const knex = require("../database/knex");
+const bcrypt = require("bcryptjs");
 
 class UsersController {
   async create(request, response) {
@@ -11,7 +12,7 @@ class UsersController {
         throw new Error("Este e-mail já está em uso.");
       }
 
-      const hanshedPassword = await hash(password, 8);
+      const hanshedPassword = await bcrypt.hash(password, 8);
 
       await knex("users").insert({ name, email, password: hanshedPassword });
 
